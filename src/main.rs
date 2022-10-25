@@ -2,6 +2,7 @@
 #![no_main]
 #![feature(type_alias_impl_trait)]
 
+mod adalogger;
 
 use core::fmt::Write;
 use embassy_executor::Spawner;
@@ -34,7 +35,13 @@ async fn main(_spawner: Spawner) {
     );
 
     let bus = shared_bus::BusManagerCortexM::new(i2c);
-
+    let spi = embassy_rp::spi::Spi::new_blocking(
+        p.SPI0,
+        p.PIN_18,
+        p.PIN_19,
+        p.PIN_20,
+        embassy_rp::spi::Config::default(),
+    );
     let mut display: GraphicsMode<_> = Builder::new()
         .with_size(DisplaySize::Display64x128)
         .with_rotation(DisplayRotation::Rotate90)
@@ -97,6 +104,11 @@ async fn main(_spawner: Spawner) {
     let mut measurement_text: String<64> = String::new();
     let mut button_b = gpio::Input::new(p.PIN_8, gpio::Pull::Up);
     let mut scd40 = scd4x::scd4x::Scd4x::new(bus.acquire_i2c(), Delay);
+    let mut _adalogger = adalogger::Adalogger::new(
+        bus.acquire_i2c(),
+        spi,
+        gpio::Output::new(p.PIN_10, gpio::Level::High),
+    );
     if let Err(_) = scd40.stop_periodic_measurement() {
         Text::with_alignment(
             "Error stopping measurements",

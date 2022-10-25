@@ -1,2 +1,4 @@
 [toolchain]
-channel = "nightly"
+channel = "nightly-2022-09-22"
+components = ["rust-src", "rustfmt"]
+targets = ["thumbv6m-none-eabi"]

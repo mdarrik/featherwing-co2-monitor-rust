@@ -14,11 +14,12 @@ defmt-rtt = "0.3.2"
 embassy-executor = { git = "https://github.com/mdarrik/embassy", version = "0.1.0", features = [
     "defmt",
     "integrated-timers",
+    "nightly",
 ] }
 embassy-futures = { git = "https://github.com/mdarrik/embassy", version = "0.1.0", features = [
     "defmt",
 ] }
-embassy-rp = { git = "https://github.com/mdarrik/embassy", version = "0.1.0", features = [
+embassy-rp = { git = "https://github.com/mdarrik/embassy", version = "0.1.0", branch = "featherwing-rp-2040", features = [
     "defmt",
     "unstable-traits",
     "nightly",
@@ -35,13 +36,14 @@ embassy-time = { git = "https://github.com/mdarrik/embassy", version = "0.1.0", 
 embedded-graphics = "0.7.1"
 embedded-hal = "0.2.7"
 embedded-hal-async = "0.1.0-alpha.2"
-embedded-sdmmc = "0.3.0"
+embedded-sdmmc = { git = "https://github.com/mdarrik/embedded-sdmmc-rs" }
 futures = { version = "0.3.24", default-features = false, features = [
     "async-await",
     "cfg-target-has-atomic",
     "unstable",
 ] }
 heapless = { version = "0.7.16", features = ["defmt"] }
+once_cell = { version = "1.15.0", default-features = false }
 panic-probe = { version = "0.3.0", features = ["print-defmt"] }
 scd4x = "0.2.1"
 sh1107 = { git = "https://github.com/mdarrik/sh1107-rs", version = "0.4.0" }
@@ -50,6 +52,9 @@ static_cell = "1.0.0"
 
 [patch."https://github.com/mdarrik/sh1107-rs"]
 sh1107 = { path = "../sh1107-rs" }
+
+[patch."https://github.com/mdarrik/embassy"]
+embassy-rp = { path = "../../embassy-rs/embassy/embassy-rp" }
 
 [[bin]]
 name = "featherwing-co2-monitor-rust"
