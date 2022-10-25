@@ -47,7 +47,7 @@ where
         data: SensorData,
         i2c: I2C,
     ) -> Result<(), embedded_sdmmc::Error<embedded_sdmmc::SdMmcError>> {
-        let mut enabled_device = self.block_device.acquire().unwrap();
+        let enabled_device = self.block_device.acquire().unwrap();
         let rtc = Pcf8253 {
             i2c: RefCell::new(i2c),
         };
@@ -113,7 +113,7 @@ struct Pcf8253<I2C> {
     i2c: RefCell<I2C>,
 }
 
-impl<'a, I2C> Pcf8253<I2C>
+impl<I2C> Pcf8253<I2C>
 where
     I2C: WriteRead,
 {
