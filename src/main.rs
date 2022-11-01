@@ -264,51 +264,47 @@ async fn main(_spawner: Spawner) {
             }
         };
         measurement_wait_future.await;
-        match scd40.measurement() {
-            Ok(measurement) => {
-                let timestamp = _adalogger.get_timestamp();
-                // set the indicator led high to signal that an SD card write is happening to reduce the chances of corrupting the data
-                indicator_led.set_high();
-                if let Err(write_error) = _adalogger.write_co2_data(&measurement, bus.acquire_i2c())
-                {
-                    DISPLAY.lock(|display_option| {
-                        if let Some(mut display) = display_option.take() {
-                            display.clear();
-                            let mut err_str: String<512> = String::new();
-                            display.clear();
-                            core::write!(&mut err_str, "{:#?}", write_error).unwrap();
-                            Text::with_alignment(
-                                &err_str,
-                                Point::new(10, YOFFSET),
-                                character_style,
-                                Alignment::Left,
-                            )
-                            .draw(&mut display)
-                            .unwrap();
-                            display.flush().unwrap_or_default();
-                            display_option.set(Some(display));
-                        }
-                    });
+        if let Ok(measurement) = scd40.measurement() {
+            let timestamp = _adalogger.get_timestamp();
+            // set the indicator led high to signal that an SD card write is happening to reduce the chances of corrupting the data
+            indicator_led.set_high();
+            if let Err(write_error) = _adalogger.write_co2_data(&measurement, bus.acquire_i2c()) {
+                DISPLAY.lock(|display_option| {
+                    if let Some(mut display) = display_option.take() {
+                        display.clear();
+                        let mut err_str: String<512> = String::new();
+                        display.clear();
+                        core::write!(&mut err_str, "{:#?}", write_error).unwrap();
+                        Text::with_alignment(
+                            &err_str,
+                            Point::new(10, YOFFSET),
+                            character_style,
+                            Alignment::Left,
+                        )
+                        .draw(&mut display)
+                        .unwrap();
+                        display.flush().unwrap_or_default();
+                        display_option.set(Some(display));
+                    }
+                });
 
-                    Timer::after(Duration::from_secs(5)).await;
-                    DISPLAY.lock(|display_option| {
-                        if let Some(mut display) = display_option.take() {
-                            display.clear();
-                            display.flush().unwrap_or_default();
-                            display_option.set(Some(display));
-                        }
-                    });
-                }
-                LAST_MEASUREMENT.lock(|data_cell| {
-                    data_cell.replace(MeasurementData {
-                        co2: measurement.co2,
-                        humidity: measurement.humidity,
-                        temperature: measurement.temperature,
-                        timestamp,
-                    })
+                Timer::after(Duration::from_secs(5)).await;
+                DISPLAY.lock(|display_option| {
+                    if let Some(mut display) = display_option.take() {
+                        display.clear();
+                        display.flush().unwrap_or_default();
+                        display_option.set(Some(display));
+                    }
                 });
             }
-            Err(_) => {}
+            LAST_MEASUREMENT.lock(|data_cell| {
+                data_cell.replace(MeasurementData {
+                    co2: measurement.co2,
+                    humidity: measurement.humidity,
+                    temperature: measurement.temperature,
+                    timestamp,
+                })
+            });
         }
         indicator_led.set_low();
     }
@@ -436,7 +432,7 @@ async fn initialization<Interface, I2C, E>(
     Timer::after(Duration::from_secs(1)).await;
     display.clear();
     display.flush().unwrap();
-    if let Err(_) = scd40.stop_periodic_measurement() {
+    if scd40.stop_periodic_measurement().is_err() {
         Text::with_alignment(
             "Error stopping measurements",
             display.bounding_box().center(),
@@ -451,7 +447,7 @@ async fn initialization<Interface, I2C, E>(
     #[cfg(feature = "factory-reset")]
     async {
         display.clear();
-        if let Err(e) = scd40.factory_reset() {
+        if scd40.factory_reset().is_err() {
             Text::with_alignment(
                 "scd40:\nError issuing factory reset",
                 display.bounding_box().center(),
@@ -569,7 +565,7 @@ async fn initialization<Interface, I2C, E>(
         }
     }
     #[cfg(feature = "set-altitude")]
-    if let Err(_) = scd40.set_altitude(64) {
+    if scd40.set_altitude(64).is_err() {
         Text::with_alignment(
             "Error setting altitude",
             Point {
@@ -603,7 +599,7 @@ async fn initialization<Interface, I2C, E>(
     display.clear();
     #[cfg(feature = "set-altitude")]
     scd40.persist_settings().unwrap_or_default();
-    if let Err(_) = scd40.start_periodic_measurement() {
+    if scd40.start_periodic_measurement().is_err() {
         Text::with_alignment(
             "Error starting measurements",
             display.bounding_box().center(),

@@ -46,7 +46,7 @@ where
         let enabled_device = self
             .block_device
             .acquire()
-            .map_err(|e| WriteCO2Error::SpiError(e))?;
+            .map_err(WriteCO2Error::SpiError)?;
         let rtc = Pcf8253 {
             i2c: RefCell::new(i2c),
         };
@@ -54,10 +54,10 @@ where
             embedded_sdmmc::Controller::new(enabled_device, rtc);
         let mut volume = controller
             .get_volume(embedded_sdmmc::VolumeIdx(0))
-            .map_err(|e| WriteCO2Error::SdmmcError(e))?;
+            .map_err(WriteCO2Error::SdmmcError)?;
         let root_directory = controller
             .open_root_dir(&volume)
-            .map_err(|e| WriteCO2Error::SdmmcError(e))?;
+            .map_err(WriteCO2Error::SdmmcError)?;
         let mut file =
             match controller.find_directory_entry(&volume, &root_directory, CO2_DATA_FILE_NAME) {
                 Err(_) => {
@@ -68,7 +68,7 @@ where
                             CO2_DATA_FILE_NAME,
                             Mode::ReadWriteCreate,
                         )
-                        .map_err(|e| WriteCO2Error::SdmmcError(e))?;
+                        .map_err(WriteCO2Error::SdmmcError)?;
                     if let Err(err) = controller.write(
                         &mut volume,
                         &mut file,
@@ -76,7 +76,7 @@ where
                     ) {
                         controller
                             .close_file(&volume, file)
-                            .map_err(|e| WriteCO2Error::SdmmcError(e))?;
+                            .map_err(WriteCO2Error::SdmmcError)?;
                         controller.close_dir(&volume, root_directory);
                         return Err(WriteCO2Error::SdmmcError(err));
                     } else {
@@ -90,7 +90,7 @@ where
                         CO2_DATA_FILE_NAME,
                         Mode::ReadWriteAppend,
                     )
-                    .map_err(|e| WriteCO2Error::SdmmcError(e))?,
+                    .map_err(WriteCO2Error::SdmmcError)?,
             };
 
         let mut data_string: String<64> = String::new();
