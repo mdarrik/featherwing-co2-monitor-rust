@@ -1,0 +1,12 @@
+[default.general]
+chip = "RP2040_SELFDEBUG"
+
+
+[default.reset]
+halt_afterwards = false
+
+[default.rtt]
+enabled = true
+
+[default.gdb]
+enabled = false

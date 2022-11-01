@@ -258,22 +258,24 @@ dependencies = [
 [[package]]
 name = "embassy-cortex-m"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
  "atomic-polyfill 1.0.1",
  "cfg-if",
  "cortex-m 0.7.6",
  "critical-section 1.1.1",
- "embassy-executor 0.1.0",
+ "embassy-executor 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
  "embassy-hal-common",
- "embassy-macros 0.1.0",
- "embassy-sync 0.1.0",
+ "embassy-macros 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
+ "embassy-sync 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
 ]
 
 [[package]]
 name = "embassy-embedded-hal"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
- "embassy-sync 0.1.0",
+ "embassy-sync 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
  "embedded-hal 0.2.7",
  "embedded-hal 1.0.0-alpha.9",
  "embedded-hal-async",
@@ -285,11 +287,12 @@ dependencies = [
 [[package]]
 name = "embassy-executor"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
  "atomic-polyfill 1.0.1",
  "cfg-if",
  "critical-section 1.1.1",
- "embassy-macros 0.1.0",
+ "embassy-macros 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
  "futures-util",
  "static_cell",
 ]
@@ -312,6 +315,7 @@ dependencies = [
 [[package]]
 name = "embassy-futures"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 
 [[package]]
 name = "embassy-futures"
@@ -324,6 +328,7 @@ dependencies = [
 [[package]]
 name = "embassy-hal-common"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
  "num-traits",
 ]
@@ -331,6 +336,7 @@ dependencies = [
 [[package]]
 name = "embassy-macros"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
  "darling",
  "proc-macro2",
@@ -352,6 +358,7 @@ dependencies = [
 [[package]]
 name = "embassy-rp"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
  "atomic-polyfill 1.0.1",
  "cfg-if",
@@ -361,11 +368,11 @@ dependencies = [
  "defmt",
  "embassy-cortex-m",
  "embassy-embedded-hal",
- "embassy-executor 0.1.0",
- "embassy-futures 0.1.0",
+ "embassy-executor 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
+ "embassy-futures 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
  "embassy-hal-common",
- "embassy-sync 0.1.0",
- "embassy-time 0.1.0",
+ "embassy-sync 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
+ "embassy-time 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
  "embassy-usb-driver",
  "embedded-hal 0.2.7",
  "embedded-hal 1.0.0-alpha.9",
@@ -380,6 +387,7 @@ dependencies = [
 [[package]]
 name = "embassy-sync"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
  "atomic-polyfill 1.0.1",
  "cfg-if",
@@ -406,11 +414,12 @@ dependencies = [
 [[package]]
 name = "embassy-time"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
  "atomic-polyfill 1.0.1",
  "cfg-if",
  "critical-section 1.1.1",
- "embassy-macros 0.1.0",
+ "embassy-macros 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
  "embedded-hal 0.2.7",
  "futures-util",
 ]
@@ -432,6 +441,7 @@ dependencies = [
 [[package]]
 name = "embassy-usb-driver"
 version = "0.1.0"
+source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
  "defmt",
 ]
@@ -439,8 +449,7 @@ dependencies = [
 [[package]]
 name = "embedded-graphics"
 version = "0.7.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "750082c65094fbcc4baf9ba31583ce9a8bb7f52cadfb96f6164b1bc7f922f32b"
+source = "git+https://github.com/embedded-graphics/embedded-graphics#2e65f5c82c9718be3ebf20dc0fff3514d5dd9ae0"
 dependencies = [
  "az",
  "byteorder",
@@ -452,8 +461,7 @@ dependencies = [
 [[package]]
 name = "embedded-graphics-core"
 version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b8b1239db5f3eeb7e33e35bd10bd014e7b2537b17e071f726a09351431337cfa"
+source = "git+https://github.com/embedded-graphics/embedded-graphics#2e65f5c82c9718be3ebf20dc0fff3514d5dd9ae0"
 dependencies = [
  "az",
  "byteorder",
@@ -503,7 +511,7 @@ checksum = "36673b79844ff4ec0e3f00aeca0b2cfff564ff6739ab9801d13f45a8ec6cc1c7"
 [[package]]
 name = "embedded-sdmmc"
 version = "0.4.0"
-source = "git+https://github.com/mdarrik/embedded-sdmmc-rs#a33b10f6f1c25df663290b90429f4e1fd1c91cc0"
+source = "git+https://github.com/mdarrik/embedded-sdmmc-rs?branch=skip-wait-init-sequence#ffed79e18afc56349bfd293e6770022aa52c60b1"
 dependencies = [
  "byteorder",
  "embedded-hal 0.2.7",
@@ -540,6 +548,7 @@ dependencies = [
  "embassy-sync 0.1.0 (git+https://github.com/mdarrik/embassy)",
  "embassy-time 0.1.0 (git+https://github.com/mdarrik/embassy)",
  "embedded-graphics",
+ "embedded-graphics-core",
  "embedded-hal 0.2.7",
  "embedded-hal-async",
  "embedded-sdmmc",
@@ -555,9 +564,9 @@ dependencies = [
 
 [[package]]
 name = "float-cmp"
-version = "0.8.0"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e1267f4ac4f343772758f7b1bdcbe767c218bbab93bb432acbf5162bbf85a6c4"
+checksum = "98de4bbd547a563b716d8dfa9aad1cb19bfab00f4fa09a6a4ed21dbcf44ce9c4"
 dependencies = [
  "num-traits",
 ]
@@ -731,9 +740,9 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
 name = "micromath"
-version = "1.1.1"
+version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bc4010833aea396656c2f91ee704d51a6f1329ec2ab56ffd00bfd56f7481ea94"
+checksum = "39617bc909d64b068dcffd0e3e31679195b5576d0c83fadc52690268cc2b2b55"
 
 [[package]]
 name = "nb"
@@ -953,6 +962,7 @@ dependencies = [
 [[package]]
 name = "sh1107"
 version = "0.4.0"
+source = "git+https://github.com/mdarrik/sh1107-rs#1575ed0441b3ee92ec63e0ce110443c5f352c4c5"
 dependencies = [
  "embedded-graphics-core",
  "embedded-hal 0.2.7",

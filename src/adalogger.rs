@@ -42,49 +42,58 @@ where
         }
     }
 
-    pub fn write_co2_data(
-        &mut self,
-        data: SensorData,
-        i2c: I2C,
-    ) -> Result<(), embedded_sdmmc::Error<embedded_sdmmc::SdMmcError>> {
-        let enabled_device = self.block_device.acquire().unwrap();
+    pub fn write_co2_data(&mut self, data: &SensorData, i2c: I2C) -> Result<(), WriteCO2Error> {
+        let enabled_device = self
+            .block_device
+            .acquire()
+            .map_err(|e| WriteCO2Error::SpiError(e))?;
         let rtc = Pcf8253 {
             i2c: RefCell::new(i2c),
         };
         let mut controller: Controller<_, Pcf8253<I2C>, 4, 4> =
             embedded_sdmmc::Controller::new(enabled_device, rtc);
-        let mut volume = controller.get_volume(embedded_sdmmc::VolumeIdx(0))?;
-        let root_directory = controller.open_root_dir(&volume)?;
+        let mut volume = controller
+            .get_volume(embedded_sdmmc::VolumeIdx(0))
+            .map_err(|e| WriteCO2Error::SdmmcError(e))?;
+        let root_directory = controller
+            .open_root_dir(&volume)
+            .map_err(|e| WriteCO2Error::SdmmcError(e))?;
         let mut file =
             match controller.find_directory_entry(&volume, &root_directory, CO2_DATA_FILE_NAME) {
                 Err(_) => {
-                    let mut file = controller.open_file_in_dir(
-                        &mut volume,
-                        &root_directory,
-                        CO2_DATA_FILE_NAME,
-                        Mode::ReadWriteCreate,
-                    )?;
+                    let mut file = controller
+                        .open_file_in_dir(
+                            &mut volume,
+                            &root_directory,
+                            CO2_DATA_FILE_NAME,
+                            Mode::ReadWriteCreate,
+                        )
+                        .map_err(|e| WriteCO2Error::SdmmcError(e))?;
                     if let Err(err) = controller.write(
                         &mut volume,
                         &mut file,
                         b"CO2, Temperature (C), Humidity, Time\n",
                     ) {
-                        controller.close_file(&volume, file)?;
+                        controller
+                            .close_file(&volume, file)
+                            .map_err(|e| WriteCO2Error::SdmmcError(e))?;
                         controller.close_dir(&volume, root_directory);
-                        return Err(err);
+                        return Err(WriteCO2Error::SdmmcError(err));
                     } else {
                         file
                     }
                 }
-                Ok(_) => controller.open_file_in_dir(
-                    &mut volume,
-                    &root_directory,
-                    CO2_DATA_FILE_NAME,
-                    Mode::ReadWriteAppend,
-                )?,
+                Ok(_) => controller
+                    .open_file_in_dir(
+                        &mut volume,
+                        &root_directory,
+                        CO2_DATA_FILE_NAME,
+                        Mode::ReadWriteAppend,
+                    )
+                    .map_err(|e| WriteCO2Error::SdmmcError(e))?,
             };
 
-        let mut data_string: String<46> = String::new();
+        let mut data_string: String<64> = String::new();
         let time = self.rtc.get_timestamp();
         core::write!(
             &mut data_string,
@@ -145,4 +154,10 @@ where
         )
         .unwrap()
     }
+}
+
+#[derive(Debug, Clone)]
+pub enum WriteCO2Error {
+    SpiError(embedded_sdmmc::sdmmc::Error),
+    SdmmcError(embedded_sdmmc::Error<embedded_sdmmc::SdMmcError>),
 }
