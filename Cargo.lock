@@ -264,10 +264,10 @@ dependencies = [
  "cfg-if",
  "cortex-m 0.7.6",
  "critical-section 1.1.1",
- "embassy-executor 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
+ "embassy-executor",
  "embassy-hal-common",
- "embassy-macros 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
- "embassy-sync 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
+ "embassy-macros",
+ "embassy-sync",
 ]
 
 [[package]]
@@ -275,7 +275,7 @@ name = "embassy-embedded-hal"
 version = "0.1.0"
 source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
 dependencies = [
- "embassy-sync 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
+ "embassy-sync",
  "embedded-hal 0.2.7",
  "embedded-hal 1.0.0-alpha.9",
  "embedded-hal-async",
@@ -292,22 +292,9 @@ dependencies = [
  "atomic-polyfill 1.0.1",
  "cfg-if",
  "critical-section 1.1.1",
- "embassy-macros 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
- "futures-util",
- "static_cell",
-]
-
-[[package]]
-name = "embassy-executor"
-version = "0.1.0"
-source = "git+https://github.com/mdarrik/embassy#ce1cba761c2942b7faa27f4098487c6468784729"
-dependencies = [
- "atomic-polyfill 1.0.1",
- "cfg-if",
- "critical-section 1.1.1",
  "defmt",
- "embassy-macros 0.1.0 (git+https://github.com/mdarrik/embassy)",
- "embassy-time 0.1.0 (git+https://github.com/mdarrik/embassy)",
+ "embassy-macros",
+ "embassy-time",
  "futures-util",
  "static_cell",
 ]
@@ -316,11 +303,6 @@ dependencies = [
 name = "embassy-futures"
 version = "0.1.0"
 source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
-
-[[package]]
-name = "embassy-futures"
-version = "0.1.0"
-source = "git+https://github.com/mdarrik/embassy#ce1cba761c2942b7faa27f4098487c6468784729"
 dependencies = [
  "defmt",
 ]
@@ -345,17 +327,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "embassy-macros"
-version = "0.1.0"
-source = "git+https://github.com/mdarrik/embassy#ce1cba761c2942b7faa27f4098487c6468784729"
-dependencies = [
- "darling",
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "embassy-rp"
 version = "0.1.0"
 source = "git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040#dc2992afd3e5fd657af927c964b60c312ec727bd"
@@ -368,11 +339,11 @@ dependencies = [
  "defmt",
  "embassy-cortex-m",
  "embassy-embedded-hal",
- "embassy-executor 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
- "embassy-futures 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
+ "embassy-executor",
+ "embassy-futures",
  "embassy-hal-common",
- "embassy-sync 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
- "embassy-time 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
+ "embassy-sync",
+ "embassy-time",
  "embassy-usb-driver",
  "embedded-hal 0.2.7",
  "embedded-hal 1.0.0-alpha.9",
@@ -392,19 +363,6 @@ dependencies = [
  "atomic-polyfill 1.0.1",
  "cfg-if",
  "critical-section 1.1.1",
- "embedded-io",
- "futures-util",
- "heapless",
-]
-
-[[package]]
-name = "embassy-sync"
-version = "0.1.0"
-source = "git+https://github.com/mdarrik/embassy#ce1cba761c2942b7faa27f4098487c6468784729"
-dependencies = [
- "atomic-polyfill 1.0.1",
- "cfg-if",
- "critical-section 1.1.1",
  "defmt",
  "embedded-io",
  "futures-util",
@@ -419,21 +377,8 @@ dependencies = [
  "atomic-polyfill 1.0.1",
  "cfg-if",
  "critical-section 1.1.1",
- "embassy-macros 0.1.0 (git+https://github.com/mdarrik/embassy?branch=featherwing-rp-2040)",
- "embedded-hal 0.2.7",
- "futures-util",
-]
-
-[[package]]
-name = "embassy-time"
-version = "0.1.0"
-source = "git+https://github.com/mdarrik/embassy#ce1cba761c2942b7faa27f4098487c6468784729"
-dependencies = [
- "atomic-polyfill 1.0.1",
- "cfg-if",
- "critical-section 1.1.1",
  "defmt",
- "embassy-macros 0.1.0 (git+https://github.com/mdarrik/embassy)",
+ "embassy-macros",
  "embedded-hal 0.2.7",
  "futures-util",
 ]
@@ -542,11 +487,11 @@ dependencies = [
  "cortex-m-rt",
  "defmt",
  "defmt-rtt",
- "embassy-executor 0.1.0 (git+https://github.com/mdarrik/embassy)",
- "embassy-futures 0.1.0 (git+https://github.com/mdarrik/embassy)",
+ "embassy-executor",
+ "embassy-futures",
  "embassy-rp",
- "embassy-sync 0.1.0 (git+https://github.com/mdarrik/embassy)",
- "embassy-time 0.1.0 (git+https://github.com/mdarrik/embassy)",
+ "embassy-sync",
+ "embassy-time",
  "embedded-graphics",
  "embedded-graphics-core",
  "embedded-hal 0.2.7",
